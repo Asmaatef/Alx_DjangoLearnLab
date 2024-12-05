@@ -1,8 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404 , redirect
+from bookshelf.models import Book
+from bookshelf.forms import BookForm
 from django.contrib.auth.decorators import permission_required
-from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponseForbidden
-from relationship_app.models import Book
 
 @permission_required('relationship_app.can_view', raise_exception=True)
 def book_list(request):
@@ -37,4 +37,29 @@ def delete_book(request, pk):
         book.delete()
         return redirect('book_list')
     return render(request, 'delete_book.html', {'book': book})
+
+
+def secure_book_list(request):
+    books = Book.objects.all()
+    return render(request, 'bookshelf/book_list.html', {'books': books})
+
+def secure_search_books(request):
+    query = request.GET.get('query', '')
+    if query:
+        books = Book.objects.filter(title__icontains=query)
+    else:
+        books = Book.objects.all()
+    return render(request, 'bookshelf/book_list.html', {'books': books})
+
+def add_book(request):
+    if request.method == 'POST':
+        form = BookForm(request.POST)
+        if form.is_valid():
+            form.save()  # Securely saves validated data
+            return redirect('book_list')
+    else:
+        form = BookForm()
+    return render(request, 'bookshelf/add_book.html', {'form': form})
+
+
 
