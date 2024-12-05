@@ -60,6 +60,7 @@ def add_book(request):
     else:
         form = BookForm()
     return render(request, 'bookshelf/add_book.html', {'form': form})
+    books = Book.objects.filter(Q(title__icontains=query) | Q(author__icontains=query))
 
 
 
