@@ -1,8 +1,9 @@
 bookshelf.CustomUser
 AUTH_USER_MODEL = 'relationship_app.CustomUser'
 import os
-
 DEBUG = False  # Set to False in production
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
 INSTALLED_APPS += ['csp']
 
 CSP_DEFAULT_SRC = ("'self'",)  
