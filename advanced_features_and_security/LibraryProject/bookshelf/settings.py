@@ -3,7 +3,10 @@ AUTH_USER_MODEL = 'relationship_app.CustomUser'
 import os
 
 DEBUG = False  # Set to False in production
+INSTALLED_APPS += ['csp']
 
+CSP_DEFAULT_SRC = ("'self'",)  
+CSP_SCRIPT_SRC = ("'self'",)  
 ALLOWED_HOSTS = ['yourdomain.com', 'localhost', '127.0.0.1']
 
 SECURE_BROWSER_XSS_FILTER = True  # Enable browser's XSS filter
