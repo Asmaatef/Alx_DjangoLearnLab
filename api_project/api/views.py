@@ -12,3 +12,4 @@ urlpatterns = [
 class BookViewSet(ModelViewSet):
     queryset = Book.objects.all()
     serializer_class = BookSerializer
+viewsets.ModelViewSet
